@@ -25,6 +25,13 @@ import Helm from 'react-helmet'; // because we are already using helmet
 import reducer from '../createReducer';
 import createRoutes from '../routes/root';
 
+import wechat from 'wechat';
+var wechatConfig = {
+  token: 'd4624c36b6795d1d99dcf0547af5443d',
+  appid: 'wx76f7aa416aaa1b54',
+  encodingAESKey: '9Yf1bIuEHNpT7XqccC3LL0qFgC2xFFOYliSPbuQu7tX'
+};
+
 const isDeveloping = process.env.NODE_ENV == 'development';
 const port = process.env.PORT || 5000;
 const server = global.server = express();
@@ -42,6 +49,44 @@ server.use(compression());
 server.use('/api/v0/posts', require('./api/posts'));
 server.use('/api/v0/post', require('./api/post'));
 
+
+server.use(express.query());
+server.use('/wechat', wechat(wechatConfig, function (req, res, next) {
+  // 微信输入信息都在req.weixin上
+  var message = req.weixin;
+  if (message.FromUserName === 'diaosi') {
+    // 回复屌丝(普通回复)
+    res.reply('hehe');
+  } else if (message.FromUserName === 'text') {
+    //你也可以这样回复text类型的信息
+    res.reply({
+      content: 'text object',
+      type: 'text'
+    });
+  } else if (message.FromUserName === 'hehe') {
+    // 回复一段音乐
+    res.reply({
+      type: "music",
+      content: {
+        title: "来段音乐吧",
+        description: "一无所有",
+        musicUrl: "http://mp3.com/xx.mp3",
+        hqMusicUrl: "http://mp3.com/xx.mp3",
+        thumbMediaId: "thisThumbMediaId"
+      }
+    });
+  } else {
+    // 回复高富帅(图文回复)
+    res.reply([
+      {
+        title: '你来我家接我吧',
+        description: '这是女神与高富帅之间的对话',
+        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
+        url: 'http://nodeapi.cloudfoundry.com/'
+      }
+    ]);
+  }
+}));
 if (isDeveloping) {
   server.use(morgan('dev'));
   const compiler = webpack(config);

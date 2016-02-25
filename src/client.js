@@ -12,7 +12,7 @@ import { StyleSheet } from 'aphrodite';
 // Your app's reducer and routes:
 import createRoutes from './routes/root';
 import { configureStore } from './store';
-
+require('style!weui');
 const initialState = window.INITIAL_STATE || {};
 
 // Set up Redux (note: this API requires redux@>=3.1.0):

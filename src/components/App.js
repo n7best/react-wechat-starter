@@ -3,6 +3,8 @@ import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import Nav from './Nav';
 
+
+
 const App = ({ children }) => {
   return (
     <div className={css(styles.root)}>
@@ -12,6 +14,7 @@ const App = ({ children }) => {
         />
         <h2 className={css(styles.title)}>
           React Production Starter
+
         </h2>
         <Nav/>
       {children}

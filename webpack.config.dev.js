@@ -28,10 +28,23 @@ module.exports = {
     }),
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel'],
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css!postcss-loader!less'
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
+      }
+    ]
+  },
+  postcss: function () {
+    return [autoprefixer];
   }
 };

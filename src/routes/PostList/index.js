@@ -4,7 +4,11 @@ import { loadPosts } from './actions';
 import { connect } from 'react-redux';
 import PostListItem from './components/PostListItem';
 import { StyleSheet, css } from 'aphrodite';
+import WeUI from 'react-weui';
 
+
+
+const {Button} = WeUI;
 const redial = {
   fetch: ({ dispatch }) => dispatch(loadPosts()),
 };
@@ -16,6 +20,7 @@ const mapStateToProps = (state) => ({
 const PostListPage = ({ posts }) =>
   <div>
     <h2 className={css(styles.title)}>PostListPage</h2>
+    <WeUI.Button>hello wechat</WeUI.Button>
     {posts.map((post, i) => <PostListItem key={post.id} post={post} />)}
   </div>;
 

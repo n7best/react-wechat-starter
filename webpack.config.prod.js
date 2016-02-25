@@ -1,6 +1,7 @@
 // jscs:disable
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: false,
@@ -35,8 +36,19 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: 'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0',
+      loaders: ['react-hot', 'babel'],
       include: path.join(__dirname, 'src')
+    },
+    {
+      test: /\.less$/,
+      loader: 'style!css!postcss-loader!less'
+    },
+    {
+      test: /\.css/,
+      loader: 'style!css'
     }]
+  },
+  postcss: function () {
+    return [autoprefixer];
   }
 };
